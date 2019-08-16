@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col-md-4 mx-auto">
+    <div class="card mt-4 text-center">
+      <div class="card-header">
+        Account Register
+      </div>
+      <img src="https://www.logospng.com/images/36/the-best-note-taking-android-app-for-2014-sec-notes-why-36482.png" style="background-size:cover; padding-top:16px;" alt="">
+      <div class="card-body">
+        <form action="/users/signup" method="POST">
+          {{!-- NAME --}}
+          <div class="form-group">
+            <input type="text" class="form-control" name="name" placeholder="Name" value="{{name}}">
+          </div>
+          {{!-- EMAIL --}}
+          <div class="form-group">
+            <input type="email" class="form-control" name="email" placeholder="Email" value="{{email}}">
+          </div>
+          {{!-- PASSWORD --}}
+          <div class="form-group">
+            <input type="password" class="form-control" name="password" placeholder="Password" value="{{password}}">
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" name="confirm_password" placeholder="Confirm Password"
+            value="{{confirm_password}}">
+          </div>
+          <div class="form-group">
+            <button class="btn btn-primary btn-block">
+              SignUp
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

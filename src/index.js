@@ -4,8 +4,10 @@ const morgan = require('morgan');
 const path = require('path');
 const session = require('express-session');
 const methodOverride = require('method-override');
+const flash = require('connect-flash');
 // Initializations
 const app = express();
+require('./database');
 
 // Settings
 app.set('appName', process.env.PORT ||'notes-app');
@@ -13,7 +15,7 @@ app.set('port', 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.engine('.hbs', exphbs({
   defaultLayout: 'main',
-  layoutsDir: path.join(app.get('views'), 'layout'),
+  layoutsDir: path.join(app.get('views'), 'layouts'),
   partialsDir: path.join(app.get('views'), 'partials'),
   extname: '.hbs',
 }));
@@ -27,16 +29,24 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
 }));
+app.use(flash())
 app.use(morgan('dev'));
 // app.use(express.json());
 
 // Global Variables
+app.use((req,res,next) => {
+  res.locals.success_msg = req.flash('success_msg')
+  res.locals.error_msg = req.flash('error_msg')
+  next();
+})
 
 // Routes
-app.use("/",(req, res, next)=>{
-  console.log("function")
-});
+app.use(require('./routes/index'));
+app.use(require('./routes/notes'));
+app.use(require('./routes/users'));
+
 // Static Files
+app.use(express.static(path.join(__dirname, 'public')))
 
 // Server
 app.listen(app.get('port'), () => {
